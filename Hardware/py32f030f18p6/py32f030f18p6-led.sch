@@ -15126,6 +15126,8 @@ Source: &lt;a href="https://www.diodes.com//assets/Datasheets/AP2114.pdf"&gt; Da
 <part name="J2ROW9-16" library="SparkFun-Connectors" deviceset="CONN_08" device="&quot;"/>
 <part name="J3ROW17-24" library="SparkFun-Connectors" deviceset="CONN_08" device="&quot;"/>
 <part name="J4ROW25-32" library="SparkFun-Connectors" deviceset="CONN_08" device="&quot;"/>
+<part name="J1" library="SparkFun-Connectors" deviceset="CONN_03" device="" value="455-1750-1-ND"/>
+<part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17402,6 +17404,13 @@ Source: &lt;a href="https://www.diodes.com//assets/Datasheets/AP2114.pdf"&gt; Da
 <attribute name="VALUE" x="-114.3" y="15.494" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="-114.3" y="28.448" size="1.778" layer="95" font="vector"/>
 </instance>
+<instance part="J1" gate="J$1" x="-111.76" y="-50.8" smashed="yes">
+<attribute name="VALUE" x="-114.3" y="-58.166" size="1.778" layer="96" font="vector"/>
+<attribute name="NAME" x="-114.3" y="-45.212" size="1.778" layer="95" font="vector"/>
+</instance>
+<instance part="GND9" gate="1" x="-99.06" y="-63.5" smashed="yes">
+<attribute name="VALUE" x="-101.6" y="-66.04" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -17470,6 +17479,12 @@ Source: &lt;a href="https://www.diodes.com//assets/Datasheets/AP2114.pdf"&gt; Da
 <wire x1="20.32" y1="-53.34" x2="17.78" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="-53.34" x2="17.78" y2="-60.96" width="0.1524" layer="91"/>
 <pinref part="GND13" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="J1" gate="J$1" pin="1"/>
+<wire x1="-104.14" y1="-53.34" x2="-99.06" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-53.34" x2="-99.06" y2="-60.96" width="0.1524" layer="91"/>
+<pinref part="GND9" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="COL_SLCK_IN" class="0">
@@ -17697,6 +17712,11 @@ Source: &lt;a href="https://www.diodes.com//assets/Datasheets/AP2114.pdf"&gt; Da
 <pinref part="U$1" gate="G$1" pin="RXD"/>
 <wire x1="154.94" y1="-20.32" x2="190.5" y2="-20.32" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="J1" gate="J$1" pin="3"/>
+<wire x1="-104.14" y1="-48.26" x2="-96.52" y2="-48.26" width="0.1524" layer="91"/>
+<label x="-96.52" y="-48.26" size="1.27" layer="95" xref="yes"/>
+</segment>
 </net>
 <net name="PA3-U1RX" class="0">
 <segment>
@@ -17710,6 +17730,11 @@ Source: &lt;a href="https://www.diodes.com//assets/Datasheets/AP2114.pdf"&gt; Da
 <wire x1="154.94" y1="-22.86" x2="172.72" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="172.72" y1="-22.86" x2="172.72" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="-12.7" x2="172.72" y2="-12.7" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="J1" gate="J$1" pin="2"/>
+<wire x1="-104.14" y1="-50.8" x2="-96.52" y2="-50.8" width="0.1524" layer="91"/>
+<label x="-96.52" y="-50.8" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="GPIO5" class="0">
