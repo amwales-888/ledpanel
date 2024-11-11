@@ -295,13 +295,6 @@ RevB</text>
 <vertex x="1.27" y="80.01"/>
 <vertex x="0" y="80.01"/>
 </polygon>
-<dimension x1="0" y1="81.28" x2="81.28" y2="81.28" x3="40.64" y3="88.9" textsize="1.778" layer="1"/>
-<dimension x1="0" y1="0" x2="0" y2="81.28" x3="-12.7" y3="40.64" textsize="1.778" layer="1"/>
-<dimension x1="0" y1="80.01" x2="6.35" y2="80.01" x3="3.175" y3="83.82" textsize="1.778" layer="1"/>
-<dimension x1="74.93" y1="80.01" x2="81.28" y2="80.01" x3="78.105" y3="83.82" textsize="1.778" layer="1"/>
-<dimension x1="26.67" y1="59.69" x2="0" y2="59.69" x3="13.335" y3="92.71" textsize="1.778" layer="1"/>
-<dimension x1="54.61" y1="59.69" x2="81.28" y2="59.69" x3="67.945" y3="92.71" textsize="1.778" layer="1"/>
-<dimension x1="26.67" y1="59.69" x2="26.67" y2="81.28" x3="-5.08" y3="70.485" textsize="1.778" layer="1"/>
 </plain>
 <libraries>
 <library name="SparkFun-Connectors">
