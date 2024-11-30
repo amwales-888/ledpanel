@@ -75,6 +75,12 @@ void serialToParallelOutByte(int id, uint8_t value, int flag) {
                 }
 
 								LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_10);
+								
+								__nop();
+								__nop();
+								__nop();
+								__nop();
+																
 								LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_10);
             }
 
@@ -101,6 +107,12 @@ void serialToParallelOutByte(int id, uint8_t value, int flag) {
                 }
 
 								LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_6);
+								
+								__nop();
+								__nop();
+								__nop();
+								__nop();
+								
 								LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_6);
 
             }
@@ -186,27 +198,29 @@ void updateBitmap(void) {
 
 void updateBitmap2(void) {
 
-//    static int col = 0;
-//    static int row = 0;
-//    static int lcol = 0;
-//    static int lrow = 0;
-//    
-//    screen[lrow] &= ~(1 << lcol);
-//    
-//    screen[row] |= 1 << col;
+#define roffset 24
+#define coffset 3
+	
+    static int col = 0;
+    static int row = 0;
+    static int lcol = 0;
+    static int lrow = 0;
+    
+    screen[lrow+roffset][0+coffset] &= ~(1 << lcol);    
+    screen[row+roffset][0+coffset] |= 1 << col;
 
-//    lcol = col;
-//    lrow = row;
-//    
-//    
-//    col++;
-//    if (col >= 8) {
-//        col = 0;
-//        row++;
-//        if (row >= 8) {
-//            row = 0;            
-//        }
-//    }    
+    lcol = col;
+    lrow = row;
+    
+    
+    col++;
+    if (col >= 8) {
+        col = 0;
+        row++;
+        if (row >= 8) {
+            row = 0;            
+        }
+    }    
 }
 
 volatile static uint32_t systickCnt;
@@ -224,8 +238,8 @@ int main(void)
     struct task_s tasks[] = {
 
 		{ 0, 0,  outputBitmap },  /* update a different row every 10ms */
-		{ 0, 5,  updateBitmap },  /* 50ms animations written to bitmap */
-		{ 0, 50, updateBitmap2 },  /* 500ms animations written to bitmap */
+		{ 0, 10,  updateBitmap },  /* 50ms animations written to bitmap */
+		{ 0, 1000, updateBitmap2 },  /* 1S animations written to bitmap */
 	};
 	
 	
@@ -235,8 +249,8 @@ int main(void)
 
 	LL_SYSTICK_EnableIT();
 
-	screen[0][0] = 0b10000001;
-	screen[7][0] = 0b10000001;
+//	screen[0][0] = 0b10000001;
+//	screen[7][0] = 0b10000001;
 
 	screen[24][0] = 0b10000001;
 	screen[31][0] = 0b10000001;
@@ -245,8 +259,8 @@ int main(void)
 	screen[0][3] = 0b10000001;
 	screen[7][3] = 0b10000001;
 
-	screen[24][3] = 0b10000001;
-	screen[31][3] = 0b10000001;
+//	screen[24][3] = 0b10000001;
+//	screen[31][3] = 0b10000001;
 	
 	
   while (1)
@@ -271,6 +285,21 @@ int main(void)
   }
 }
 
+#define OLDCODE
+
+#ifndef OLDCODE
+static void APP_SystemClockConfig(void)
+{
+  LL_UTILS_ClkInitTypeDef ClkInit = { LL_RCC_SYSCLK_DIV_1, LL_RCC_APB1_DIV_1 };
+
+  LL_RCC_HSI_Enable();
+  LL_RCC_HSI_SetCalibFreq(LL_RCC_HSICALIBRATION_24MHz);
+  while (LL_RCC_HSI_IsReady() != 1);
+  LL_PLL_ConfigSystemClock_HSI(&ClkInit);
+  SysTick_Config(48000);
+  NVIC_SetPriority(SysTick_IRQn, 0);
+}
+#else
 static void APP_SystemClockConfig(void)
 {
   LL_UTILS_ClkInitTypeDef UTILS_ClkInitStruct;
@@ -281,15 +310,15 @@ static void APP_SystemClockConfig(void)
   //Wait for stabilization
   while (LL_RCC_HSI_IsReady() != 1);
   //AHB does not divide the frequency
-  UTILS_ClkInitStruct.AHBCLKDivider = LL_RCC_SYSCLK_DIV_2;
+  UTILS_ClkInitStruct.AHBCLKDivider = LL_RCC_SYSCLK_DIV_1;
   //APB is not crossover
-  UTILS_ClkInitStruct.APB1CLKDivider = LL_RCC_APB1_DIV_2;
+  UTILS_ClkInitStruct.APB1CLKDivider = LL_RCC_APB1_DIV_1;
   //Set the system clock source to PLL+HSI, note the method name 
   LL_PLL_ConfigSystemClock_HSI(&UTILS_ClkInitStruct);
   //Update the settings for SysTick
   LL_InitTick(48000000U, 1000U);
 }
-
+#endif
 
 static void APP_GPIOConfig(void)
 {
@@ -297,12 +326,11 @@ static void APP_GPIOConfig(void)
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_9, LL_GPIO_MODE_OUTPUT);
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_10, LL_GPIO_MODE_OUTPUT);
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_11, LL_GPIO_MODE_OUTPUT);
-
+	
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOB);
   LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_4, LL_GPIO_MODE_OUTPUT);
   LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_5, LL_GPIO_MODE_OUTPUT);
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_6, LL_GPIO_MODE_OUTPUT);
-
+  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_6, LL_GPIO_MODE_OUTPUT);	
 }
 
 void APP_ErrorHandler(void)
