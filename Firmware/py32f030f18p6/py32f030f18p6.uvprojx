@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>.\Libraries\PY32F0xx_LL_Driver\Src\py32f0xx_ll_utils.c</FilePath>
             </File>
+            <File>
+              <FileName>random.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\random.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
